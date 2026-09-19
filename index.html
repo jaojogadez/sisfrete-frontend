@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sisfrete - Gestão Estratégica de Fretes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <img src="src/sisfrete-logo.png" alt="Sisfrete - Gestão Logística" class="brand-image">
+                <span class="logo-tagline">Automação e Inteligência Logística</span>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a class="nav-link active" onclick="showPage('overview')">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                        <span>Visão Geral</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showPage('freight-analysis')">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                        <span>Análise de Frete</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showPage('carriers')">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                        <span>Transportadoras</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showPage('regions')">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                        <span>Regiões</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showPage('channels')">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                        <span>Canais de Venda</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showPage('coverage')">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        <span>Cobertura</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showPage('insights')">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                        <span>Diretrizes Estratégicas</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <strong>UNIMAR TECH SUMMIT 2026</strong>
+                <span>Hackathon · Grupo 08</span>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- HEADER -->
+            <header class="header">
+                <div class="header-left">
+                    <h1>Painel de Frete Estratégico</h1>
+                    <p>Monitoramento e inteligência analítica de custos, prazos e cobertura de distribuição</p>
+                </div>
+                <div class="header-right">
+                    <div class="period-badge">
+                        <strong>Setembro 2026</strong>
+                        <small id="lastUpdate">Atualizado agora</small>
+                    </div>
+                    <button class="button button-secondary" onclick="toggleFilters()">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                        <span>Filtros</span>
+                    </button>
+                    <button class="button button-primary" onclick="exportReport()">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        <span>Exportar</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- FILTER BAR -->
+            <section class="filter-bar" id="filterBar" style="display: none;">
+                <div class="filter-container">
+                    <div class="filter-group">
+                        <label for="filterState">Estado (UF)</label>
+                        <select id="filterState" onchange="applyFilters()">
+                            <option value="">Todos os Estados</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="PR">Paraná</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filterCarrier">Transportadora</label>
+                        <select id="filterCarrier" onchange="applyFilters()">
+                            <option value="">Todas as Transportadoras</option>
+                            <option value="Sedex">Sedex</option>
+                            <option value="Loggi">Loggi</option>
+                            <option value="Shein">Shein Shipping</option>
+                            <option value="Correios">Correios</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filterChannel">Canal de Venda</label>
+                        <select id="filterChannel" onchange="applyFilters()">
+                            <option value="">Todos os Canais</option>
+                            <option value="Web">Web</option>
+                            <option value="Mobile">Mobile</option>
+                            <option value="MarketPlace">MarketPlace</option>
+                            <option value="Loja">Loja Física</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filterPriceRange">Faixa Tarifária (R$)</label>
+                        <select id="filterPriceRange" onchange="applyFilters()">
+                            <option value="">Todas as Faixas</option>
+                            <option value="0-50">Até R$ 50</option>
+                            <option value="50-100">R$ 50 - R$ 100</option>
+                            <option value="100-200">R$ 100 - R$ 200</option>
+                            <option value="200+">Acima de R$ 200</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filterWeight">Faixa de Peso (kg)</label>
+                        <select id="filterWeight" onchange="applyFilters()">
+                            <option value="">Todos os Pesos</option>
+                            <option value="0-5">0 - 5 kg</option>
+                            <option value="5-15">5 - 15 kg</option>
+                            <option value="15-30">15 - 30 kg</option>
+                            <option value="30+">Acima de 30 kg</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filterDeadline">Prazo de Entrega (dias)</label>
+                        <select id="filterDeadline" onchange="applyFilters()">
+                            <option value="">Todos os Prazos</option>
+                            <option value="1-5">1 a 5 dias</option>
+                            <option value="5-10">5 a 10 dias</option>
+                            <option value="10-20">10 a 20 dias</option>
+                            <option value="20+">Mais de 20 dias</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="filter-actions">
+                    <button class="button-clear" onclick="clearFilters()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                        <span>Limpar Filtros</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- CONTENT AREA -->
+            <div class="content">
+                <!-- OVERVIEW PAGE -->
+                <section class="page-section active" id="overview">
+                    <!-- KPI CARDS -->
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-header">
+                                <span class="kpi-label">Volume de Cotações</span>
+                                <div class="kpi-icon-wrap">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                </div>
+                            </div>
+                            <div class="kpi-value" id="kpiQuotations">42,7M</div>
+                            <div class="kpi-subtitle">Total de cotações processadas</div>
+                            <div class="kpi-change positive">↑ +12.5% em relação a agosto</div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-header">
+                                <span class="kpi-label">Lojas Integradas</span>
+                                <div class="kpi-icon-wrap">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                </div>
+                            </div>
+                            <div class="kpi-value" id="kpiStores">~460</div>
+                            <div class="kpi-subtitle">Pontos de expedição e lojas ativas</div>
+                            <div class="kpi-change positive">↑ +8 novas unidades</div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-header">
+                                <span class="kpi-label">Canais Ativos</span>
+                                <div class="kpi-icon-wrap">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                                </div>
+                            </div>
+                            <div class="kpi-value" id="kpiChannels">4</div>
+                            <div class="kpi-subtitle">Origens omnichannel em operação</div>
+                            <div class="kpi-change">100% de disponibilidade</div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-header">
+                                <span class="kpi-label">Frete Médio Ponderado</span>
+                                <div class="kpi-icon-wrap">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                </div>
+                            </div>
+                            <div class="kpi-value" id="kpiAvgFreight">R$ 87,42</div>
+                            <div class="kpi-subtitle">Custo médio por remessa</div>
+                            <div class="kpi-change negative">↑ +3.2% vs. mês anterior</div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-header">
+                                <span class="kpi-label">SLA Médio de Entrega</span>
+                                <div class="kpi-icon-wrap">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                </div>
+                            </div>
+                            <div class="kpi-value" id="kpiAvgDeadline">8.5 dias</div>
+                            <div class="kpi-subtitle">Tempo médio de trânsito (SLA)</div>
+                            <div class="kpi-change positive">↓ -0.8 dias de redução</div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-header">
+                                <span class="kpi-label">Índice de Cobertura</span>
+                                <div class="kpi-icon-wrap">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                </div>
+                            </div>
+                            <div class="kpi-value" id="kpiCoverage">94.2%</div>
+                            <div class="kpi-subtitle">Municípios com oferta logística</div>
+                            <div class="kpi-change positive">↑ +156 municípios atendidos</div>
+                        </div>
+                    </div>
+
+                    <!-- VOLUME CHART -->
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title-wrap">
+                                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                    <h2 class="chart-title">Evolução de Cotações</h2>
+                                </div>
+                                <div class="chart-subtitle">Progressão semanal de solicitações de frete — Setembro 2026</div>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="volumeChart"></canvas>
+                        </div>
+                        <div style="font-size: 12px; color: var(--text-muted); margin-top: 10px;">
+                            Agregação por período de 7 dias | Amostragem analítica representativa de 42.7M de registros
+                        </div>
+                    </div>
+
+                    <!-- TWO COLUMN GRID -->
+                    <div class="grid-2">
+                        <!-- PRICE BY REGION -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div>
+                                    <div class="chart-title-wrap">
+                                        <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                        <h2 class="chart-title">Custo Médio por Estado</h2>
+                                    </div>
+                                    <div class="chart-subtitle">Principais praças com maior valor médio de frete</div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="priceByRegionChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- CARRIERS COMPARISON -->
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div>
+                                    <div class="chart-title-wrap">
+                                        <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                                        <h2 class="chart-title">Eficiência: Preço × Prazo</h2>
+                                    </div>
+                                    <div class="chart-subtitle">Matriz de posicionamento por transportadora (tamanho indica volume)</div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="carriersScatterChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CHANNELS PERFORMANCE -->
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title-wrap">
+                                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                                    <h2 class="chart-title">Desempenho por Canal de Distribuição</h2>
+                                </div>
+                                <div class="chart-subtitle">Consolidação de volume, custo médio e SLA por origem</div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Canal</th>
+                                        <th>Cotações</th>
+                                        <th>Participação (%)</th>
+                                        <th>Frete Médio</th>
+                                        <th>Prazo Médio</th>
+                                        <th>Transportadora Principal</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="channelTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- KEY INSIGHTS -->
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title-wrap">
+                                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                    <h2 class="chart-title">Diagnóstico e Oportunidades Estratégicas</h2>
+                                </div>
+                                <div class="chart-subtitle">Análises consolidadas de eficiência logística e balanceamento operacional</div>
+                            </div>
+                        </div>
+                        <div class="insights-grid" id="insightsContainer">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FREIGHT ANALYSIS PAGE -->
+                <section class="page-section" id="freight-analysis">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title-wrap">
+                                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                                    <h2 class="chart-title">Correlação: Peso Físico / Cubado × Preço do Frete</h2>
+                                </div>
+                                <div class="chart-subtitle">Curva tarifária em função do dimensionamento de carga</div>
+                            </div>
+                            <div class="toggle-group">
+                                <button class="toggle-btn active" onclick="toggleWeightMode('weight')">Peso Real</button>
+                                <button class="toggle-btn" onclick="toggleWeightMode('volume')">Cubagem</button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="weightPriceChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div>
+                                    <div class="chart-title-wrap">
+                                        <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                        <h2 class="chart-title">Distribuição de Prazos de Entrega</h2>
+                                    </div>
+                                    <div class="chart-subtitle">Concentração de entregas por faixas de SLA (dias úteis)</div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="deadlineDistributionChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div>
+                                    <div class="chart-title-wrap">
+                                        <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                        <h2 class="chart-title">Distribuição Tarifária por Faixa</h2>
+                                    </div>
+                                    <div class="chart-subtitle">Frequência de cotações agrupadas por valor tarifário</div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="priceDistributionChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title-wrap">
+                                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                    <h2 class="chart-title">Estatísticas Descritivas do Frete</h2>
+                                </div>
+                                <div class="chart-subtitle">Sumário matemático das cotações ativas na base Sisfrete</div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Métrica</th>
+                                        <th>Valor Apurado</th>
+                                        <th>Contexto Operacional</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Frete Mínimo Registrado</strong></td>
+                                        <td>R$ 5,99</td>
+                                        <td>Região Sudeste (intramunicipal) · Loggi</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Frete Máximo Registrado</strong></td>
+                                        <td>R$ 489,50</td>
+                                        <td>Remessa de longa distância (Norte fluvial) · Sedex</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Média Ponderada Global</strong></td>
+                                        <td>R$ 87,42</td>
+                                        <td>Custo equilibrado em todos os estados</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Mediana Amostral</strong></td>
+                                        <td>R$ 72,15</td>
+                                        <td>50% de todas as remessas custam até R$ 72,15</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Desvio Padrão</strong></td>
+                                        <td>R$ 124,67</td>
+                                        <td>Dispersão tarifária decorrente de dimensões extraordinárias</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CARRIERS PAGE -->
+                <section class="page-section" id="carriers">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title-wrap">
+                                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                                    <h2 class="chart-title">Quadro Comparativo de Transportadoras</h2>
+                                </div>
+                                <div class="chart-subtitle">Market share, preço médio, prazo médio e capilaridade municipal</div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Transportadora</th>
+                                        <th>Cotações</th>
+                                        <th>Participação (%)</th>
+                                        <th>Frete Médio</th>
+                                        <th>Prazo Médio</th>
+                                        <th>Municípios Atendidos</th>
+                                        <th>Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="carrierTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div>
+                                    <div class="chart-title-wrap">
+                                        <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                                        <h2 class="chart-title">Participação de Mercado (Volume)</h2>
+                                    </div>
+                                    <div class="chart-subtitle">Distribuição percentual de envios por parceiro logístico</div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="carrierMarketShareChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div>
+                                    <div class="chart-title-wrap">
+                                        <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                        <h2 class="chart-title">Comparativo Tarifário Médio</h2>
+                                    </div>
+                                    <div class="chart-subtitle">Média de valor de frete praticado por transportadora</div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="carrierPricesChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title-wrap">
+                                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                                    <h2 class="chart-title">Matriz de Presença: Transportadora × Região</h2>
+                                </div>
+                                <div class="chart-subtitle">Intensidade de cotações registradas por transportadora em cada praça</div>
+                            </div>
+                        </div>
+                        <div id="carrierRegionHeatmap" style="overflow-x: auto;"></div>
+                    </div>
+                </section>
+
+                <!-- REGIONS PAGE -->
+                <section class="page-section" id="regions">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title-wrap">
+                                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                                    <h2 class="chart-title">Desempenho Logístico Regional</h2>
+                                </div>
+                                <div class="chart-subtitle">Volume de expedições, custos médios e SLAs consolidados por UF</div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Estado (UF)</th>
+                                        <th>Cotações</th>
+                                        <th>Participação (%)</th>
+                                        <th>Frete Médio</th>
+                                        <th>Prazo Médio</th>
+                                        <th>Transportadora Predominante</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="regionTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div>
+                                    <div class="chart-title-wrap">
+                                        <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                        <h2 class="chart-title">Concentração de Demanda por UF</h2>
+                                    </div>
+                                    <div class="chart-subtitle">Distribuição geográfica das solicitações de entrega</div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="regionVolumeChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div>
+                                    <div class="chart-title-wrap">
+                                        <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                        <h2 class="chart-title">Dispersão Tarifária por UF</h2>
+                                    </div>
+                                    <div class="chart-subtitle">Comparativo do custo médio de frete por estado</div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="regionPriceChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CHANNELS PAGE -->
+                <section class="page-section" id="channels">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title-wrap">
+                                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                                    <h2 class="chart-title">Análise por Canal de Atendimento</h2>
+                                </div>
+                                <div class="chart-subtitle">Produtividade de fretes por plataforma de venda e origem comercial</div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Canal</th>
+                                        <th>Cotações</th>
+                                        <th>Participação (%)</th>
+                                        <th>Frete Médio</th>
+                                        <th>Prazo Médio</th>
+                                        <th>Principal Transportadora</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="channelAnalysisTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div>
+                                    <div class="chart-title-wrap">
+                                        <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                                        <h2 class="chart-title">Participação por Canal</h2>
+                                    </div>
+                                    <div class="chart-subtitle">Proporção relativa do volume de fretes por canal</div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="channelDistributionChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <div>
+                                    <div class="chart-title-wrap">
+                                        <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                        <h2 class="chart-title">Custo Médio por Canal</h2>
+                                    </div>
+                                    <div class="chart-subtitle">Comparativo de custos logísticos entre origens comerciais</div>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="channelPricesChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title-wrap">
+                                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                                    <h2 class="chart-title">Distribuição Geográfica por Canal</h2>
+                                </div>
+                                <div class="chart-subtitle">Densidade de volume de cada canal de venda por estado</div>
+                            </div>
+                        </div>
+                        <div id="channelRegionHeatmap" style="overflow-x: auto;"></div>
+                    </div>
+                </section>
+
+                <!-- COVERAGE PAGE -->
+                <section class="page-section" id="coverage">
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-header">
+                                <span class="kpi-label">Municípios Consultados</span>
+                                <div class="kpi-icon-wrap">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                </div>
+                            </div>
+                            <div class="kpi-value">3.847</div>
+                            <div class="kpi-subtitle">Total de cidades com demanda registrada</div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-header">
+                                <span class="kpi-label">Municípios Atendidos</span>
+                                <div class="kpi-icon-wrap">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                </div>
+                            </div>
+                            <div class="kpi-value">3.623</div>
+                            <div class="kpi-subtitle">94.2% de efetividade de entrega</div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-header">
+                                <span class="kpi-label">Lacunas de Atendimento</span>
+                                <div class="kpi-icon-wrap" style="background-color: #fef2f2; color: var(--danger);">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                </div>
+                            </div>
+                            <div class="kpi-value">224</div>
+                            <div class="kpi-subtitle">5.8% sem rota ativa (potencial de expansão)</div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-header">
+                                <span class="kpi-label">Operadores Homologados</span>
+                                <div class="kpi-icon-wrap">
+                                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                                </div>
+                            </div>
+                            <div class="kpi-value">4</div>
+                            <div class="kpi-subtitle">Sedex, Loggi, Shein Shipping e Correios</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title-wrap">
+                                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                                    <h2 class="chart-title">Índice de Cobertura por Estado</h2>
+                                </div>
+                                <div class="chart-subtitle">Taxa de atendimento municipal e disponibilidade de transportadoras</div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Estado</th>
+                                        <th>Cidades Consultadas</th>
+                                        <th>Cidades com Cobertura</th>
+                                        <th>Taxa de Atendimento</th>
+                                        <th>Transportadoras Disponíveis</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="coverageTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title-wrap">
+                                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                                    <h2 class="chart-title">Mapeamento de Lacunas e Prioridades de Expansão</h2>
+                                </div>
+                                <div class="chart-subtitle">Oportunidades de credenciamento logístico nas macrorregiões</div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Região</th>
+                                        <th>Cidades sem Cobertura</th>
+                                        <th>Impacto Comercial</th>
+                                        <th>Nível de Prioridade</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Norte</strong></td>
+                                        <td class="value-negative">87</td>
+                                        <td>Alto — Rota em forte expansão comercial</td>
+                                        <td><span class="metric-badge badge-danger">Alta Prioridade</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Nordeste</strong></td>
+                                        <td class="value-negative">62</td>
+                                        <td>Médio — Mercado com alta demanda de e-commerce</td>
+                                        <td><span class="metric-badge badge-warning">Média Prioridade</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Centro-Oeste</strong></td>
+                                        <td class="value-negative">41</td>
+                                        <td>Médio — Rotas com demanda corporativa</td>
+                                        <td><span class="metric-badge badge-warning">Média Prioridade</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Sudeste</strong></td>
+                                        <td class="value-positive">22</td>
+                                        <td>Baixo — Mercado consolidado e maduro</td>
+                                        <td><span class="metric-badge badge-success">Baixa Prioridade</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Sul</strong></td>
+                                        <td class="value-positive">12</td>
+                                        <td>Baixo — Excelente malha de transporte ativa</td>
+                                        <td><span class="metric-badge badge-success">Baixa Prioridade</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- INSIGHTS PAGE -->
+                <section class="page-section" id="insights">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title-wrap">
+                                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                    <h2 class="chart-title">Sumário Executivo e Diretrizes Estratégicas</h2>
+                                </div>
+                                <div class="chart-subtitle">Recomendações táticas baseadas na inteligência de dados Sisfrete</div>
+                            </div>
+                        </div>
+                        <div class="insights-grid" id="detailedInsightsContainer">
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title-wrap">
+                                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                                    <h2 class="chart-title">Matriz de Competitividade Tarifária: Transportadora × UF</h2>
+                                </div>
+                                <div class="chart-subtitle">Frete médio ponderado por combinação de rota (clique para auditoria detalhada)</div>
+                            </div>
+                        </div>
+                        <div id="strategyMatrix" style="overflow-x: auto;"></div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <div>
+                                <div class="chart-title-wrap">
+                                    <svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                    <h2 class="chart-title">Diagnóstico Analítico de Resultados</h2>
+                                </div>
+                                <div class="chart-subtitle">Síntese de apontamentos e plano de ação operacional</div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Constatação Analítica</th>
+                                        <th>Impacto no Negócio</th>
+                                        <th>Plano de Ação Recomendado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="findingsTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL DE DETALHES -->
+    <div class="modal" id="detailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Detalhamento Operacional</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+        </div>
+    </div>
+
+    <script src="src/script.js"></script>
+</body>
+</html>
